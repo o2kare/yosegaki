@@ -1,6 +1,7 @@
 import * as React from 'react'
 import '@freee_jp/vibes/css'
-import {Container, FinishTaskIllust, Text, ListCard, Loading} from '@freee_jp/vibes'
+import {Container, FinishTaskIllust, Text,
+    ListCard, Loading, TaskDialog, Paragraph} from '@freee_jp/vibes'
 import {useEffect} from "react"
 
 type Content = {
@@ -11,6 +12,7 @@ type Content = {
 export default function App() {
     const [contents, setContents] = React.useState<Content[]>([])
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
+    const [selectedContent, setSelectedContent] = React.useState<Content | null>(null)
     useEffect(() => {
         setIsLoading(true)
         fetch(
@@ -26,8 +28,8 @@ export default function App() {
     }, [])
     const cards = contents.map((content) => {
         return (
-            <ListCard title={content.name} mb={1}>
-                {content.message}
+            <ListCard title={content.name} mb={1} onClick={() => setSelectedContent(content)}>
+                {content.message.substring(0, 45) + "..."}
             </ListCard>
         )
     })
@@ -38,6 +40,12 @@ export default function App() {
             <Loading isLoading={isLoading}>
                 {cards}
             </Loading>
+            <TaskDialog
+                title={selectedContent?.name} isOpen={!!selectedContent} closeButtonLabel="close"
+                onRequestClose={() => setSelectedContent(null)}
+            >
+                <Paragraph>{selectedContent?.message}</Paragraph>
+            </TaskDialog>
         </Container>
     )
 }
