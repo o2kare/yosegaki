@@ -45,5 +45,6 @@
   },
   "main": "index.js",
   "author": "junpayment <lyric.from.riding.tarsier@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://junpayment.github.io/yosegaki/"
 }
