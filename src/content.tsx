@@ -18,7 +18,7 @@ export default function App() {
     useEffect(() => {
         setIsLoading(true)
         fetch(
-            "https://script.google.com/macros/s/AKfycbxcjcvwV86nEPk-D54KP27cKnm3KLhSIY0YGi2sY8UQy6po0EUTlcKxOH6usQQjiqR0/exec",
+            process.env.REACT_APP_API_URL || "",
             {
                 method: "GET",
                 redirect: "follow",
@@ -35,10 +35,11 @@ export default function App() {
             </ListCard>
         )
     })
+    const title = process.env.REACT_APP_TITLE || "おつかれ!"
     return (
         <VibesProvider fixedLayout={false}>
             <Container width="narrow">
-                <Text size={1.5}>おつかれ！！！</Text>
+                <Text size={1.5}>{title}</Text>
                 <FinishTaskIllust/>
                 <Loading isLoading={isLoading}>
                     <ContentsBase>
