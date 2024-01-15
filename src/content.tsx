@@ -4,7 +4,7 @@ import {
     Container, FinishTaskIllust, Text,
     ListCard, Loading, TaskDialog, Paragraph, VibesProvider, ContentsBase
 } from '@freee_jp/vibes'
-import {useEffect} from "react"
+import {ReactNode, useEffect} from "react"
 
 type Content = {
     name: string;
@@ -36,6 +36,13 @@ export default function App() {
         )
     })
     const title = process.env.REACT_APP_TITLE || "おつかれ!"
+    const selectedMessage = (selectedContent?.message || "").split("\n").map((str) =>
+        (
+            <Paragraph>{str}</Paragraph>
+        )
+    ).reduce<ReactNode[]>((prev, curr) => {
+        return [...prev, curr]
+    }, [])
     return (
         <VibesProvider fixedLayout={false}>
             <Container width="narrow">
@@ -47,10 +54,10 @@ export default function App() {
                     </ContentsBase>
                 </Loading>
                 <TaskDialog
-                    title={selectedContent?.name} isOpen={!!selectedContent} closeButtonLabel="close"
+                    title={selectedContent?.name + "からのメッセージ"} isOpen={!!selectedContent} closeButtonLabel="close"
                     onRequestClose={() => setSelectedContent(null)}
                 >
-                    <Paragraph>{selectedContent?.message}</Paragraph>
+                    <Paragraph>{selectedMessage}</Paragraph>
                 </TaskDialog>
             </Container>
         </VibesProvider>
