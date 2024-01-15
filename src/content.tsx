@@ -57,7 +57,7 @@ export default function App() {
                     title={selectedContent?.name + "からのメッセージ"} isOpen={!!selectedContent} closeButtonLabel="close"
                     onRequestClose={() => setSelectedContent(null)}
                 >
-                    <Paragraph>{selectedMessage}</Paragraph>
+                    {selectedMessage}
                 </TaskDialog>
             </Container>
         </VibesProvider>
