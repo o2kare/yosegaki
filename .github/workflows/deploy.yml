@@ -17,9 +17,6 @@ jobs:
         with:
           node-version: '20.11.0'
       - name: Build
-        env:
-          REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
-          REACT_APP_TITLE: ${{ vars.REACT_APP_TITLE }}
         run: |
           yarn
           yarn build
