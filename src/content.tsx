@@ -33,7 +33,7 @@ export default function App() {
             return res.json()
         }).then(data => setContents(data.contents)
         ).finally(() => setIsLoading(false))
-    }, [])
+    }, [apiUrl])
     const cards = contents.map((content) => {
         return (
             <ListCard title={content.name} mb={1} onClick={() => setSelectedContent(content)}>
