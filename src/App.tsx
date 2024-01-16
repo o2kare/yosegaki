@@ -1,13 +1,16 @@
-import React from 'react';
+import React from 'react'
 import Component from "./content"
-import './App.css';
+import './App.css'
+import {BrowserRouter as Router} from "react-router-dom"
 
 function App() {
-  return (
-      <div className={"App"}>
-        <Component />
-      </div>
-  );
+    return (
+        <Router>
+            <div className={"App"}>
+                <Component/>
+            </div>
+        </Router>
+    )
 }
 
-export default App;
+export default App

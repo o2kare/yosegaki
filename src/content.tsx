@@ -5,6 +5,7 @@ import {
     ListCard, Loading, TaskDialog, Paragraph, VibesProvider, ContentsBase
 } from '@freee_jp/vibes'
 import {ReactNode, useEffect} from "react"
+import {useLocation} from "react-router-dom"
 
 type Content = {
     name: string;
@@ -15,10 +16,15 @@ export default function App() {
     const [contents, setContents] = React.useState<Content[]>([])
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
     const [selectedContent, setSelectedContent] = React.useState<Content | null>(null)
+    const search = useLocation().search
+    const params = new URLSearchParams(search)
+    const key = params.get("key")
+    const apiUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=" + key
+    const who = params.get("who")
     useEffect(() => {
         setIsLoading(true)
         fetch(
-            process.env.REACT_APP_API_URL || "",
+            apiUrl,
             {
                 method: "GET",
                 redirect: "follow",
@@ -35,7 +41,7 @@ export default function App() {
             </ListCard>
         )
     })
-    const title = process.env.REACT_APP_TITLE || "おつかれ!"
+    const title = who + " おつかれさまでした!"
     const selectedMessage = (selectedContent?.message || "").split("\n").map((str) =>
         (
             <Paragraph>{str}</Paragraph>
@@ -54,7 +60,8 @@ export default function App() {
                     </ContentsBase>
                 </Loading>
                 <TaskDialog
-                    title={selectedContent?.name + "からのメッセージ"} isOpen={!!selectedContent} closeButtonLabel="close"
+                    title={selectedContent?.name + "からのメッセージ"} isOpen={!!selectedContent}
+                    closeButtonLabel="close"
                     onRequestClose={() => setSelectedContent(null)}
                 >
                     {selectedMessage}
